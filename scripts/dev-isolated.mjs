@@ -1,6 +1,6 @@
 import {execFileSync, spawn} from 'node:child_process';
 const branch = execFileSync('git', ['branch', '--show-current'], {encoding:'utf8'}).trim();
-const ports = {'feature/login':'5181', 'feature/josue':'5182'};
+const ports = {'codex/login-social':'5181', 'feature/login':'5181', 'feature/josue':'5182'};
 if (!ports[branch]) throw new Error('Usa feature/login o feature/josue en su propia carpeta.');
 try { process.loadEnvFile('.env.local'); } catch (e) { if(e.code !== 'ENOENT') throw e; }
 console.log('Desarrollo aislado:', branch, 'puerto', ports[branch], 'SQLite local; cloud desactivado');
