@@ -31,7 +31,7 @@ export default function WaterMap({city,zones,reports,selected,onSelect,filter,se
       const rs=latest(zone.id),box=document.createElement('div');box.className='map-popup';
       const title=document.createElement('strong');title.textContent=zone.name;box.append(title);
       const caption=document.createElement('p');caption.className='popup-count';caption.textContent=`${rs.length} aportes · ${zone.municipality||city.name}`;box.append(caption);
-      if(!rs.length){const empty=document.createElement('p');empty.textContent='Todavía no hay muestras registradas en esta colonia.';box.append(empty);const contribute=document.createElement('button');contribute.className='text-button';contribute.textContent='Registrar la primera muestra';contribute.onclick=()=>window.dispatchEvent(new CustomEvent('clara:contribute',{detail:zone.id}));box.append(contribute)}
+      if(!rs.length){const empty=document.createElement('p');empty.textContent='Todavía no hay muestras registradas en esta colonia.';box.append(empty);const contribute=document.createElement('button');contribute.className='text-button';contribute.textContent='Aportar la primera muestra';contribute.onclick=()=>window.dispatchEvent(new CustomEvent('clara:contribute',{detail:zone.id}));box.append(contribute)}
       if(rs.some(r=>r.demo)){const demo=document.createElement('p');demo.className='popup-demo';demo.textContent='Datos de prueba · fotos de referencia';box.append(demo)}
       const list=document.createElement('div');list.className='popup-samples';
       for(const report of rs.slice(0,5)){
