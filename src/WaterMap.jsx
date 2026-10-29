@@ -15,12 +15,13 @@ export default function WaterMap({city,zones,reports,selected,onSelect,filter,se
       if(!alive)return;
       if(!config.apiKey){setStatus('unconfigured');return}
       await loadGoogleMaps(config.apiKey);if(!alive)return;
-      map.current=new window.google.maps.Map(canvas.current,{center:city.center,zoom:city.zoom,styles:theme==='light'?[]:mapStyles,mapTypeControl:false,streetViewControl:false,fullscreenControl:true,zoomControl:true,gestureHandling:'cooperative',backgroundColor:'#202421'});
+      map.current=new window.google.maps.Map(canvas.current,{center:city.center,zoom:city.zoom,styles:theme==='light'?[]:mapStyles,mapTypeControl:false,streetViewControl:false,fullscreenControl:true,zoomControl:true,gestureHandling:matchMedia('(max-width:700px), (pointer:coarse)').matches?'greedy':'cooperative',backgroundColor:'#202421'});
       info.current=new window.google.maps.InfoWindow();setStatus('ready');setReady(n=>n+1);
     }).catch(()=>{if(alive)setStatus('error')});
     return()=>{alive=false;window.gm_authFailure=oldAuthFailure;if(info.current)info.current.close();if(map.current)window.google?.maps.event.clearInstanceListeners(map.current);map.current=null};
   },[attempt]);
   useEffect(()=>{map.current?.setOptions({styles:theme==='light'?[]:mapStyles})},[theme,ready]);
+  useEffect(()=>{const media=matchMedia('(max-width:700px), (pointer:coarse)'),update=()=>map.current?.setOptions({gestureHandling:media.matches?'greedy':'cooperative'});update();media.addEventListener('change',update);return()=>media.removeEventListener('change',update)},[ready]);
   useEffect(()=>{if(!map.current)return;map.current.setCenter(city.center);map.current.setZoom(city.zoom);if(city.bounds){const [west,south,east,north]=city.bounds;map.current.fitBounds({west,south,east,north},30)}info.current?.close()},[city,ready]);
   useEffect(()=>{if(!map.current)return;let cancelled=false;const api=window.google.maps,overlays=[],listeners=[];
     setLayerError(false);
