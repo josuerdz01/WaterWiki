@@ -19,7 +19,8 @@ const cdmxReports=zones.filter(z=>z.city==='cdmx').flatMap(z=>z.state===3?[]:Arr
 const imageStates=[1,2,2,2,0,0,2,0,2,0,1,2,0,0,0,1,1,2,0,2,4,2,2,1,2];
 const latestImages=[6,1,9,16,13,21,15];
 export const gdlDemoReports=Array.from({length:7},(_,zoneIndex)=>Array.from({length:60},(_,i)=>{
-  const imageNumber=i===0?latestImages[zoneIndex]:((i+zoneIndex*7)%25)+1;
+  let imageNumber=i===0?latestImages[zoneIndex]:((i+zoneIndex*7)%25)+1;
+  if(imageStates[imageNumber-1]===4)imageNumber=6;
   const state=imageStates[imageNumber-1],zone=zoneIndex===1?100:100+zoneIndex;
   const datePart=new Date(Date.UTC(2026,9,28)-Math.floor(i/2)*86400000).toISOString().slice(0,10);
   const hour=String(9+(i%2)*7).padStart(2,'0'),minute=String((i*7+zoneIndex*3)%60).padStart(2,'0');

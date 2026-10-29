@@ -1,3 +1,4 @@
+import {summarizePanorama} from './server/panorama-summary.mjs';
 import express from 'express';
 import {createServer} from 'node:http';
 import WebSocket,{WebSocketServer} from 'ws';
@@ -9,12 +10,13 @@ if(process.env.LOAD_LOCAL_ENV!=='0'){try{process.loadEnvFile('.env.local')}catch
 const ai=createAI({apiKey:process.env.OPENAI_API_KEY,model:process.env.OPENAI_MODEL||'gpt-4.1-mini',visionModel:process.env.OPENAI_VISION_MODEL||'gpt-5.4-mini'});
 const cloudOrigin=process.env.CLOUD_API_ORIGIN?.replace(/\/$/,'');
 const app=express(),server=createServer(app),wss=new WebSocketServer({noServer:true});
-const dataDir=process.env.DATA_DIR||'runtime';const storage=await openReports(dataDir,initialReports);const readReports=()=>storage.all().filter(r=>!r.demo||r.id.startsWith('demo-gdl-'));let reports=readReports();app.use(express.json({limit:'6mb'}));
+const dataDir=process.env.DATA_DIR||'runtime';const storage=await openReports(dataDir,initialReports);const readReports=()=>storage.all().filter(r=>[0,1,2].includes(r.state)&&(!r.demo||r.id.startsWith('demo-gdl-')));let reports=readReports();app.use(express.json({limit:'6mb'}));
 app.use('/api',(req,res,next)=>{res.set('Cache-Control','no-store');if(req.method==='POST'&&req.get('origin')&&new URL(req.get('origin')).host!==req.get('host'))return res.status(403).json({error:'Origen no autorizado.'});next()});
 if(cloudOrigin){app.use(['/api','/media'],async(req,res)=>{try{const upstream=await fetch(cloudOrigin+req.originalUrl,{method:req.method,headers:req.method==='POST'?{'Content-Type':'application/json'}:{},body:req.method==='POST'?JSON.stringify(req.body):undefined,signal:AbortSignal.timeout(60000)});res.status(upstream.status);for(const key of ['content-type','cache-control'])if(upstream.headers.has(key))res.setHeader(key,upstream.headers.get(key));res.send(Buffer.from(await upstream.arrayBuffer()))}catch{res.status(502).json({error:'No pudimos conectar con la base de datos en la nube. Intenta de nuevo.'})}})}
 const safe=fn=>(req,res,next)=>Promise.resolve(fn(req,res)).catch(next);
 let active=0;async function metered(fn){if(active>=3)throw new ApiError(429,'Hay otras consultas en curso. Intenta en unos segundos.');active++;try{return await fn()}finally{active--}}
 app.get('/api/reports',(_,res)=>res.json(reports));app.get('/api/ai/status',(_,res)=>res.json({configured:ai.configured}));
+app.post('/api/panorama-summary',safe(async(req,res)=>res.json(await metered(()=>summarizePanorama(req.body,reports,ai)))));
 app.post('/api/analyze',safe(async(req,res)=>res.json(await metered(()=>ai.analyze(req.body.photo)))));
 let queue=Promise.resolve();
 app.post('/api/reports',safe(async(req,res)=>{const b=req.body;if(!Number.isInteger(b.zone)||!zones.some(z=>z.id===b.zone)||b.confirmed!==true)throw new ApiError(400,'Selecciona la colonia y confirma que quieres compartir la muestra.');validatePhoto(b.photo);await(queue=queue.catch(()=>{}).then(async()=>{const analysis=await ai.ticket(b.analysisToken,b.photo);const r={id:crypto.randomUUID(),zone:b.zone,state:analysis.state,photo:b.photo,analysis,note:String(b.note||'').slice(0,500),source:String(b.source||'Llave').slice(0,60),date:new Date().toISOString(),demo:false};storage.add(r);reports=readReports();ai.consume(b.analysisToken);for(const c of wss.clients)if(c.readyState===1)c.send(JSON.stringify(reports));res.status(201).json(r)}))}));

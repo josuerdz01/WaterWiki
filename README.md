@@ -48,3 +48,9 @@ El buscador de ciudad o municipio incluye 2,478 municipios y demarcaciones de la
 Los datos de prueba se muestran únicamente en Guadalajara. Sus nueve municipios mantienen el catálogo de colonias existente. Fuera de ese catálogo, la selección encuadra el municipio y los nuevos aportes se guardan a nivel municipal: no se inventan colonias ni se afirma contar con sus límites. Los centros de encuadre se calcularon desde la extensión oficial del municipio y no ubican al usuario ni a su muestra. Véase `public/data/MUNICIPIOS.md`.
 
 El chat de consultas fue retirado. La IA se conserva únicamente para la evaluación de fotografías.
+
+## Análisis de Panorama
+
+`POST /api/panorama-summary` calcula en servidor estadísticas de ciudad/municipio, estado y colonia seleccionada de los últimos 30 días hasta la fecha del mapa. OpenAI Responses genera un solo párrafo; no se envían fotos, notas ni preguntas libres. Usa `OPENAI_MODEL` y la clave de servidor existente. El resultado se reutiliza durante 5 minutos si las estadísticas no cambian. El texto distingue datos de prueba y aportes reales; no certifica potabilidad. La interfaz incluye aviso de IA y no inventa un resumen cuando faltan datos.
+
+Las fotos no evaluables no se aceptan y no generan registros. Los análisis antiguos con estado no evaluable también se rechazan al guardar. `node verify-summary.mjs` comprueba ámbitos, fechas, datos enviados, caché y errores sin llamar a OpenAI.
