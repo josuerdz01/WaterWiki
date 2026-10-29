@@ -41,3 +41,9 @@ Si `.env.local` contiene `CLOUD_API_ORIGIN=https://clara-agua-comunidad.nicelemu
 - Límites de estados: `public/data/STATE_BOUNDARIES.md`
 
 Las fotos y el color sólo permiten describir apariencia, no certificar potabilidad ni inferir contaminantes, causas o valores de laboratorio. Los datos de prueba se identifican en mapa, historial, resumen y chat.
+
+## Cobertura nacional
+
+El buscador de ciudad o municipio incluye 2,478 municipios y demarcaciones de las 32 entidades, a partir del servicio oficial INEGI (Marco Geoestadístico diciembre de 2025, consultado el 29 de octubre de 2026). Permite buscar sin acentos por nombre, estado o clave. La cobertura se limita a México.
+
+Los datos de prueba se muestran únicamente en Guadalajara. Sus nueve municipios mantienen el catálogo de colonias existente. Fuera de ese catálogo, la selección encuadra el municipio y los nuevos aportes se guardan a nivel municipal: no se inventan colonias ni se afirma contar con sus límites. Los centros de encuadre se calcularon desde la extensión oficial del municipio y no ubican al usuario ni a su muestra. Véase `public/data/MUNICIPIOS.md`.
