@@ -17,7 +17,6 @@ Si `.env.local` contiene `CLOUD_API_ORIGIN=https://clara-agua-comunidad.nicelemu
 - Panorama con conteo de 650 ms, easing cuártico y replay al tocar, adaptado del hook de Sobre; barras de 48 pares de puntos con puntero animado. Sin introducir reglas de nómina en datos de agua.
 - 420 escenarios ficticios de Guadalajara, 25 imágenes proporcionadas por el usuario y reutilizadas, miniaturas e historial. Fuente visible; no describen la calidad real de esas colonias.
 - Clasificación automática al subir una imagen. Reducción a 2048 px, JPEG .92 sin filtros ni recorte; una sola llamada de visión a GPT-5.4 mini sin razonamiento extendido, detalle alto y salida JSON estricta. Modelo configurable. No se afirma precisión ni latencia medidas: la clave de servidor está configurada.
-- Chat implementado con datos de ciudad/fecha del servidor. No consulta fotos ni notas libres. OpenAI está configurado mediante una clave secreta de servidor.
 - SQLite D1 para registros y análisis temporales, R2 para fotos. Tokens de análisis ligados a la imagen y de un solo uso; el cliente no puede imponer la clasificación. Límite de consultas de IA por ventana y origen.
 - WebSockets: el servidor local aislado difunde al guardar; el backend cloud responde a sincronización cada 5 segundos para compartir datos entre instancias sin depender de memoria de un proceso.
 
@@ -47,3 +46,5 @@ Las fotos y el color sólo permiten describir apariencia, no certificar potabili
 El buscador de ciudad o municipio incluye 2,478 municipios y demarcaciones de las 32 entidades, a partir del servicio oficial INEGI (Marco Geoestadístico diciembre de 2025, consultado el 29 de octubre de 2026). Permite buscar sin acentos por nombre, estado o clave. La cobertura se limita a México.
 
 Los datos de prueba se muestran únicamente en Guadalajara. Sus nueve municipios mantienen el catálogo de colonias existente. Fuera de ese catálogo, la selección encuadra el municipio y los nuevos aportes se guardan a nivel municipal: no se inventan colonias ni se afirma contar con sus límites. Los centros de encuadre se calcularon desde la extensión oficial del municipio y no ubican al usuario ni a su muestra. Véase `public/data/MUNICIPIOS.md`.
+
+El chat de consultas fue retirado. La IA se conserva únicamente para la evaluación de fotografías.

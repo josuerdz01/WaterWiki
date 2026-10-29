@@ -101,3 +101,5 @@ html{overflow-x:clip}main,.workspace,.map-area{min-width:0}.workspace-footer{min
 @media(max-width:700px){.bottom-nav{background:transparent;border:0;box-shadow:none;backdrop-filter:none;padding:0;gap:10px;align-items:center;flex-direction:row-reverse;max-width:460px}.bottom-nav .nav-tabs{background:rgb(245 247 250/.87);backdrop-filter:blur(24px) saturate(1.8);border:1px solid rgb(255 255 255/.65);border-radius:999px;padding:6px;box-shadow:inset 0 1px 0 white,0 8px 30px rgb(20 19 28/.12)}.bottom-nav .nav-tabs>button{height:56px}.bottom-nav .nav-contribute{width:62px;height:62px;flex-basis:62px;border:1px solid rgb(255 255 255/.6);box-shadow:inset 0 1px 0 white,0 8px 30px rgb(20 19 28/.12)}.nav-tabs .sliding-nav-pill{top:6px;bottom:6px}.intro h1{font-size:28px;max-width:420px}}
 
 .header-nav-items{--pill-inset:5px}.nav-tabs{--pill-inset:6px}
+@media(min-width:701px){.header-tabs{flex-direction:row}.header-nav-items{width:380px;max-width:calc(100vw - 220px)}}
+@media(max-width:700px){.bottom-nav{flex-direction:row}.bottom-nav .nav-tabs{flex:1}.bottom-nav .nav-tabs>button{font-size:11px}.bottom-nav .nav-tabs>button>span{font-size:11px}}
