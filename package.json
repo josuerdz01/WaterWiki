@@ -1,0 +1,26 @@
+{
+  "name": "waterwiki",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "node scripts/build-cloud.mjs",
+    "build:client": "vite build",
+    "db:generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "lucide": "0.468.0",
+    "lucide-react": "^0.468.0",
+    "morphicons": "^2.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vite": "^6.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11",
+    "drizzle-orm": "^0.45.4",
+    "esbuild": "0.28.2"
+  }
+}

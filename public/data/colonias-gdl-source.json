@@ -1,0 +1,21 @@
+{
+  "source": "https://iieg.gob.mx/ns/wp-content/uploads/2024/11/SHAPEColonias20202024.zip",
+  "version": "INE 2024 · IIEG",
+  "sourceSha256": "1301adac4d67e17e8ad7bdf8e4a9d993395bd60ec6d46dac380c37d7f1addcdd",
+  "sourceRecords": 6624,
+  "includedRecords": 2335,
+  "municipalities": {
+    "Guadalajara": 292,
+    "San Pedro Tlaquepaque": 276,
+    "Zapopan": 770,
+    "Tonalá": 356,
+    "Zapotlanejo": 66,
+    "El Salto": 113,
+    "Ixtlahuacán de los Membrillos": 56,
+    "Tlajomulco de Zúñiga": 379,
+    "Juanacatlán": 27
+  },
+  "inputCrs": "EPSG:32613",
+  "outputCrs": "EPSG:4326",
+  "simplificationMetres": 2
+}

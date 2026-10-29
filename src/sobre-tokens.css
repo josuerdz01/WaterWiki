@@ -1,0 +1,293 @@
+/* Tokens copied from josuerdz01/sobre/src/index.css, source SHA d5813cf0ee7fc8d56da7c8fbb3e36d397a720a55. */
+:root,
+[data-theme="dark"] {
+  /*
+    Negro absoluto. No es "casi negro con un toque de azul": es #000. En un
+    OLED el pixel se apaga y el borde de la app desaparece contra el marco
+    del telefono — que es justo lo que hace que las tarjetas de vidrio se
+    lean como objetos flotando y no como recuadros sobre una pagina.
+
+    Todo lo gris de aqui abajo es NEUTRO por la misma razon. Antes cada gris
+    llevaba una pizca de morado (#17161f, #211f2c…) y esa pizca se acumulaba:
+    el fondo, el vidrio, la hoja del modal y la cola del gradiente tiraban
+    todos al azul a la vez, y el resultado leia como "azul oscuro", no como
+    negro.
+  */
+  --t-bg: #000000;
+  --t-card: #0d0d0d;
+  --t-card-2: #191919;
+  --t-card-3: #262626;
+  --t-fg: #ffffff;
+  /*
+    Los dos grises estan medidos contra la tarjeta de vidrio, no contra un
+    color opaco: el translucido deja pasar el gradiente y un gris mas apagado
+    se queda en 3.2:1. Estos aguantan 4.5:1 hasta en la tarjeta mas clara de
+    la app (la de arriba en Graficos).
+  */
+  --t-fg-muted: #a8a8a8;
+  --t-fg-subtle: #8d8d8d;
+  --t-positive: #32d583;
+  --t-negative: #ff6b6b;
+  --t-on-positive: #04240f;
+  --t-on-negative: #2a0709;
+
+  --t-line: rgb(255 255 255 / 0.08);
+  --t-hover: rgb(255 255 255 / 0.05);
+  --t-press: rgb(255 255 255 / 0.09);
+
+  /* En oscuro el campo si es la capa de arriba: gris un paso sobre la hoja. */
+  --t-field: #1d1d1d;
+  --t-field-ring: rgb(255 255 255 / 0.08);
+  --t-track: rgb(0 0 0 / 0.45);
+  --t-track-shadow: inset 0 1px 2px rgb(0 0 0 / 0.3);
+
+  --t-warn: #fbbf5a;
+  --t-warn-bg: rgb(251 191 90 / 0.14);
+
+  /*
+    La pastilla de la barra de abajo. En oscuro es un escalon de gris con
+    canto y sombra: sobre el vidrio negro hace falta el relieve para que se
+    lea como una pieza puesta encima.
+  */
+  --t-nav-pill: #1d1d1d;
+  --t-nav-pill-shadow: 0 1px 3px rgb(0 0 0 / 0.22), 0 0 0 1px rgb(255 255 255 / 0.08);
+
+  /*
+    Vidrio liquido. Son cuatro cosas a la vez y por eso convence: el tinte,
+    el desenfoque con saturacion (lo que hace que el color de abajo "sangre"
+    hacia el panel), un filo claro arriba que simula el canto biselado, y una
+    sombra suave que lo despega de la pagina.
+
+    En oscuro el vidrio es un velo NEGRO, no uno azulado ni uno claro. Negro
+    puro es lo unico que funciona encima de un gradiente de marca: sigue
+    pasando el color de la seccion (y el backdrop-filter lo satura), pero no
+    le suma un tinte propio — que es de donde salia el azul de las popups.
+  */
+  --t-glass: rgb(0 0 0 / 0.72);
+  --t-glass-tint: 0.05;
+  --t-glass-ring: rgb(255 255 255 / 0.1);
+  --t-glass-sheen: rgb(255 255 255 / 0.14);
+  --t-glass-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 40px -22px rgb(0 0 0 / 0.9);
+  --t-blur: 26px;
+
+  /* Hoja del modal: mismo material, mas opaco — encima se lee y se escribe.
+     Gris neutro, no el gris-morado de antes. */
+  --t-sheet: rgb(28 28 34 / 0.5);
+  --t-sheet-0: rgb(28 28 34 / 0);
+  --t-sheet-sheen: rgb(255 255 255 / 0.16);
+  --t-sheet-glow: 0.55;
+  --t-sheet-blur: blur(44px) saturate(1.9);
+
+  /*
+    Alto del lienzo del gradiente. En oscuro es mas alto que en claro a
+    proposito: el destino es negro puro y la pagina tambien, asi que estirar
+    la cola no cuesta nada y es la mitad de lo que hace que el apagado se vea
+    progresivo. En claro el destino es #f2f2f7 y pasado cierto punto el
+    degradado ya no aporta: alargarlo solo empuja el color de marca fuera de
+    la pantalla.
+  */
+  --grad-height: 104vh;
+
+  /*
+    La cola del gradiente. Es el tramo mas dificil de la pantalla: cualquier
+    banda o cualquier aterrizaje brusco en negro se ve como un corte, y en un
+    OLED se ve todavia mas.
+
+    1. Se interpola en OKLab, no en sRGB ni en luz lineal. OKLab es
+       perceptualmente uniforme, asi que bajar la L en pasos iguales se ve
+       como un apagado en pasos iguales — que es literalmente la definicion
+       de "progresivo". En luz lineal el tramo oscuro se hunde de golpe y el
+       negro llega mucho antes de donde deberia.
+    2. La curva es medio smoothstep y medio recta. Smoothstep sola sale y
+       entra con pendiente cero, y eso amontona todo el cambio en el centro;
+       la recta sola marca los dos extremos. Mezcladas, el arranque y el
+       aterrizaje siguen siendo suaves pero el resto del recorrido baja a
+       ritmo casi constante.
+    3. Veinte paradas repartidas hasta el 100%, y el lienzo mide
+       `--grad-height` (mas alto en oscuro que en claro). Mas distancia y
+       pasos mas cortos es lo unico que de verdad mata el banding.
+
+    El croma cae un pelo mas rapido que la luz (exponente 1.18): asi el color
+    se apaga en vez de dejar un poso frio abajo.
+  */
+  --grad-sobre: linear-gradient(180deg, #5b50e6 0%, #5b50e6 6%, #574ddc 11.2%, #5248cf 16.4%, #4b43c0 21.7%, #453eaf 26.9%, #3d379d 32.1%, #36318b 37.3%, #2e2a78 42.6%, #262365 47.8%, #1e1c53 53%, #171641 58.2%, #100f31 63.4%, #090922 68.7%, #050415 73.9%, #02020a 79.1%, #010103 84.3%, #000001 89.6%, #000000 94.8%, #000000 100%);
+  --grad-billetes: linear-gradient(180deg, #0f8377 0%, #0f8377 6%, #107d72 11.2%, #11766b 16.4%, #116d63 21.7%, #11645b 26.9%, #105a51 32.1%, #0f4f47 37.3%, #0e443d 42.6%, #0c3933 47.8%, #092e2a 53%, #072420 58.2%, #051a17 63.4%, #03110f 68.7%, #020908 73.9%, #010403 79.1%, #000101 84.3%, #000000 89.6%, #000000 94.8%, #000000 100%);
+  --grad-graficos: linear-gradient(180deg, #a044d6 0%, #a044d6 6%, #9941cc 11.2%, #903ec0 16.4%, #853ab2 21.7%, #7a35a3 26.9%, #6e3093 32.1%, #612a81 37.3%, #532570 42.6%, #461f5e 47.8%, #39194d 53%, #2d133d 58.2%, #210d2e 63.4%, #160820 68.7%, #0d0414 73.9%, #050209 79.1%, #020103 84.3%, #000001 89.6%, #000000 94.8%, #000000 100%);
+  --grad-progreso: linear-gradient(180deg, #2478e8 0%, #2478e8 6%, #2373de 11.2%, #216cd1 16.4%, #2065c2 21.7%, #1d5cb1 26.9%, #1b539f 32.1%, #18498c 37.3%, #153f79 42.6%, #113567 47.8%, #0e2b54 53%, #0a2243 58.2%, #071832 63.4%, #041023 68.7%, #020816 73.9%, #01030a 79.1%, #000103 84.3%, #000001 89.6%, #000000 94.8%, #000000 100%);
+
+  /* Los dos instrumentos de Progreso son lo unico que separa una tarjeta de
+     la otra, asi que su color no sigue al tema — solo el apagado, que si
+     tiene que cambiar para verse sobre vidrio claro u oscuro.
+
+     El arco mensual era magenta; ahora es el azul de la seccion. Mismo tono
+     que el gradiente de Progreso (#2478e8, 213°) pero subido de luz: el del
+     fondo esta ahi para quedarse quieto, y este tiene que brillar por encima
+     de el. Repetir el tono en vez de meter un color ajeno es lo que hace que
+     el instrumento parezca parte de la pantalla y no una pieza pegada. */
+  --c-arc: #4a9bff;
+  --c-arc-glow: #a5cdff;
+  --c-arc-empty: rgb(70 115 175 / 0.6);
+  --c-dot: #4ade80;
+  --c-dot-glow: #86efac;
+  --c-dot-empty: rgb(120 160 110 / 0.35);
+  /* Naranja para la cuenta atras de nomina: no repite el azul ni el verde de
+     los otros dos instrumentos, y sobre el gradiente azul de la seccion
+     queda como color complementario en vez de perderse contra el fondo. */
+  --c-pay: #ff9142;
+  --c-pay-glow: #ffc38a;
+  --c-pay-empty: rgb(175 120 75 / 0.35);
+  /*
+    Un color por categoria de gasto. Son fijos —Comida es naranja siempre—,
+    no una rotacion por posicion: si el color cambiara segun quien gasto mas
+    este mes, la barra de "En que se va el efectivo" habria que releerla
+    entera cada vez que cambia el periodo. Los tonos estan repartidos por la
+    rueda para que dos segmentos vecinos nunca se confundan, y en claro son
+    otros: los mismos hex sobre tarjeta blanca se quedan en 2:1.
+  */
+  --t-cat-comida: #ff9142;
+  --t-cat-despensa: #ffd43b;
+  --t-cat-transporte: #60a5fa;
+  --t-cat-renta: #c084fc;
+  --t-cat-servicios: #22d3ee;
+  --t-cat-salud: #f472b6;
+  --t-cat-educacion: #a3e635;
+  --t-cat-hogar: #2dd4bf;
+  --t-cat-mascota: #c69f76;
+  --t-cat-ocio: #ff6b6b;
+  /* Tono 113. No esta elegido a ojo: es el punto medio del hueco mas ancho
+     que quedaba en la rueda —59 grados entre el lima de Educacion y el verde
+     de Impuestos—, que con catorce gastos ya es lo unico que garantiza que
+     dos segmentos vecinos de la barra no se confundan. */
+  --t-cat-viajes: #6ce05c;
+  --t-cat-compras: #818cf8;
+  /* Verde puro: es el unico hueco que quedaba en la rueda entre los doce
+     gastos, y ahi dentro no compite con nada — en la barra de retiros no hay
+     ningun otro verde, y el verde de "entro dinero" nunca aparece en ella. */
+  --t-cat-impuestos: #4ade80;
+  --t-cat-tramites: #e879f9;
+  --t-cat-apoyo: #fb7185;
+  /* Las de entrada nunca comparten grafica con las de gasto —la barra es solo
+     de retiros—, asi que aqui si vale repetir tono: lo unico que tienen que
+     hacer es leerse bien en su pastilla. */
+  --t-cat-ingreso: #32d583;
+  --t-cat-venta: #2dd4bf;
+  --t-cat-prestamo: #a3e635;
+  --t-cat-regalo: #f472b6;
+  --t-cat-reembolso: #22d3ee;
+  /* "Otros" no es una categoria: es la cola. Por eso es gris y no entra en
+     la rueda — no compite por color con las que si son algo. */
+  --t-cat-otros: #8a8a8a;
+}
+
+[data-theme="light"] {
+  --t-bg: #f2f2f7;
+  --t-card: #ffffff;
+  --t-card-2: #e7e7ef;
+  --t-card-3: #d8d8e3;
+  --t-fg: #14131c;
+  /* Mismo criterio que en oscuro, medidos contra el vidrio claro: sobre una
+     tarjeta translucida encima del color de seccion, los grises de antes se
+     quedaban en 3:1. */
+  --t-fg-muted: #4c495e;
+  --t-fg-subtle: #62606f;
+  /* El verde de antes daba 3.4:1 sobre tarjeta blanca: para un importe de
+     17px hace falta 4.5. */
+  --t-positive: #077a46;
+  --t-negative: #d92d3e;
+  --t-on-positive: #ffffff;
+  --t-on-negative: #ffffff;
+
+  --t-line: rgb(20 19 28 / 0.08);
+  --t-hover: rgb(20 19 28 / 0.04);
+  --t-press: rgb(20 19 28 / 0.07);
+
+  /* Campo blanco con un aro propio: sobre la hoja gris el blanco solo ya se
+     lee, pero el aro es lo que le da canto y lo vuelve "tocable". */
+  --t-field: #ffffff;
+  --t-field-ring: rgb(20 19 28 / 0.1);
+  /* Mas tenue que antes: en claro el carril solo tiene que dar la
+     sensacion de hueco, no dibujar una caja gris. */
+  --t-track: rgb(20 19 28 / 0.045);
+  --t-track-shadow: inset 0 1px 2px rgb(20 19 28 / 0.045);
+
+  /*
+    En claro la pastilla es un gris tenue, no un chip blanco levantado. El
+    vidrio de la barra ya es casi blanco, asi que una pastilla blanca con
+    sombra se leia como un boton flotando encima de otro boton. Un velo
+    neutro al 7% hunde el hueco en vez de levantarlo: marca cual esta activa
+    sin gritar, y como es neutro apaga el color del gradiente que pasa por
+    debajo en vez de teñirse de el.
+  */
+  --t-nav-pill: rgb(20 19 28 / 0.07);
+  --t-nav-pill-shadow: inset 0 0 0 1px rgb(20 19 28 / 0.035);
+
+  /* 5.3:1 sobre su propio fondo y sobre tarjeta blanca. */
+  --t-warn: #7a4b00;
+  --t-warn-bg: rgb(196 130 0 / 0.16);
+
+  /* En claro el vidrio es blanco lechoso: deja pasar el color de la seccion
+     sin que el texto oscuro pierda contraste. */
+  --t-glass: rgb(255 255 255 / 0.82);
+  --t-glass-tint: 0;
+  --t-glass-ring: rgb(255 255 255 / 0.7);
+  --t-glass-sheen: rgb(255 255 255 / 0.9);
+  --t-glass-shadow: 0 1px 2px rgb(20 19 28 / 0.06), 0 18px 40px -22px rgb(20 19 28 / 0.35);
+  --t-blur: 24px;
+
+  /*
+    La hoja del modal en claro NO es blanca: es gris tenue. Es la unica forma
+    de que un campo de formulario se lea como campo — el blanco tiene que
+    quedarse para el hueco donde escribes, no para el fondo de todo.
+  */
+  /* El mismo tono que la pagina (`--t-bg`), casi opaco: la hoja se lee como
+     una continuacion del fondo y el contraste lo ponen solo los campos. */
+  --t-sheet: rgb(242 242 247 / 0.95);
+  --t-sheet-0: rgb(242 242 247 / 0);
+  --t-sheet-sheen: rgb(255 255 255 / 0.7);
+  --t-sheet-glow: 0.12;
+  --t-sheet-blur: blur(26px) saturate(1.25);
+
+  --grad-height: 68vh;
+
+  /* Mismo arranque de marca, pero la cola se funde con la pagina clara en vez
+     de con negro, y por eso no es la misma rampa que en oscuro: subir hacia
+     un gris casi blanco no tiene el problema que tiene bajar hacia negro —
+     no hay tramo oscuro donde se amontonen los pasos ni banding que matar.
+     Lo que si comparte es la idea: el color se sostiene arriba y todo el
+     fundido se estira, aqui hasta el 72%, porque el salto de un morado
+     saturado a #f2f2f7 es el tramo dificil de este lado. */
+  --grad-sobre: linear-gradient(180deg, #5b50e6 0%, #5b50e6 10%, #5f54e6 16.9%, #716ae6 23.8%, #8e89e6 30.7%, #adaae8 37.6%, #c8c7eb 44.4%, #ddddf0 51.3%, #ebebf3 58.2%, #f1f1f5 65.1%, #f2f2f6 72%, #f2f2f7 100%);
+  --grad-billetes: linear-gradient(180deg, #0f8377 0%, #0f8377 10%, #21857a 16.9%, #4e8f87 23.8%, #7ba29e 30.7%, #a3b9b8 37.6%, #c3cfd0 44.4%, #dbe0e3 51.3%, #eaecef 58.2%, #f1f1f5 65.1%, #f2f2f6 72%, #f2f2f7 100%);
+  --grad-graficos: linear-gradient(180deg, #a044d6 0%, #a044d6 10%, #a14ad6 16.9%, #a862d8 23.8%, #b486db 30.7%, #c4a8e0 37.6%, #d5c6e6 44.4%, #e3dced 51.3%, #edebf3 58.2%, #f1f1f5 65.1%, #f2f2f6 72%, #f2f2f7 100%);
+  --grad-progreso: linear-gradient(180deg, #2478e8 0%, #2478e8 10%, #2f7ae8 16.9%, #5387e8 23.8%, #7e9de8 30.7%, #a4b6e9 37.6%, #c4cdec 44.4%, #dce0f0 51.3%, #eaecf4 58.2%, #f1f1f6 65.1%, #f2f2f6 72%, #f2f2f7 100%);
+
+  /* Mismo azul y mismo verde; lo que cambia es el punto apagado, que sobre
+     tarjeta blanca tiene que ser mas oscuro para existir. */
+  --c-arc-empty: rgb(40 90 155 / 0.5);
+  --c-dot-empty: rgb(70 110 60 / 0.3);
+  --c-pay-empty: rgb(190 130 70 / 0.3);
+
+  --t-cat-comida: #c2650a;
+  --t-cat-despensa: #a3790a;
+  --t-cat-transporte: #2563eb;
+  --t-cat-renta: #9333ea;
+  --t-cat-servicios: #0891b2;
+  --t-cat-salud: #be185d;
+  --t-cat-educacion: #4d7c0f;
+  --t-cat-hogar: #0f766e;
+  --t-cat-mascota: #8a5a3b;
+  --t-cat-ocio: #d92d3e;
+  --t-cat-viajes: #1e7213;
+  --t-cat-compras: #4f46e5;
+  --t-cat-impuestos: #15803d;
+  --t-cat-tramites: #a21caf;
+  --t-cat-apoyo: #be123c;
+  --t-cat-ingreso: #077a46;
+  --t-cat-venta: #0f766e;
+  --t-cat-prestamo: #4d7c0f;
+  --t-cat-regalo: #be185d;
+  --t-cat-reembolso: #0891b2;
+  --t-cat-otros: #6b7280;
+}
+
+

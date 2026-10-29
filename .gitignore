@@ -1,0 +1,10 @@
+node_modules/
+dist/
+runtime/
+
+.env
+.env.local
+.env.*.local
+
+work/
+worker/assets.generated.js
