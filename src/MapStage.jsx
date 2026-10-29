@@ -1,0 +1,2 @@
+import React,{useEffect,useRef,useState} from 'react';
+export default function MapStage({children}){const root=useRef(),[stuck,S]=useState(false);useEffect(()=>{const observer=new IntersectionObserver(([entry])=>{const box=root.current?.getBoundingClientRect();S(!entry.isIntersecting&&box?.top<0&&box?.bottom>0)},{threshold:0});observer.observe(root.current.querySelector('.map-sticky-sentinel'));return()=>observer.disconnect()},[]);return <div ref={root} className={`map-stage ${stuck?'is-stuck':''}`}><span className="map-sticky-sentinel" aria-hidden="true"/>{children}</div>}
