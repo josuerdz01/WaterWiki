@@ -6,7 +6,7 @@ WaterWiki es una plataforma comunitaria nacida ante la crisis del agua en Guadal
 
 La evaluación con IA describe la apariencia visible de una fotografía y resume registros por zona. No mide contaminantes ni determina si el agua es potable.
 
-**Demo:** [waterwiki.nicelemur6.chatgpt.site](https://waterwiki.nicelemur6.chatgpt.site/) · **Código:** [GitHub](https://github.com/josuerdz01/WaterWiki)
+**Demo:** [waterwiki.nicelemur6.chatgpt.site](https://waterwiki.nicelemur6.chatgpt.site/) · **Prototipo de producción:** [explorar muestras en Guadalajara](https://waterwiki.nicelemur6.chatgpt.site/explorar?ciudad=gdl&colonia=80034) · **Código:** [GitHub](https://github.com/josuerdz01/WaterWiki)
 
 ## Qué construimos para el Build Day
 
