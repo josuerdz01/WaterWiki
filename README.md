@@ -64,7 +64,7 @@ cd WaterWiki
 pnpm install
 ```
 
-Para adaptarlo, prepara fuentes geográficas verificadas para el país y agrega su catálogo de municipios y límites de zonas; revisa el formato que espera la aplicación en [MUNICIPIOS.md](public/data/MUNICIPIOS.md), [COLONIAS.md](public/data/COLONIAS.md) y [STATE_BOUNDARIES.md](public/data/STATE_BOUNDARIES.md). Configura tus propias claves y servicios, identifica claramente los datos de demostración y conserva la atribución y licencia de mapas, fotografías y otros recursos. La cobertura del buscador mexicano no equivale a cobertura de muestras reales: cada adaptación requiere datos geográficos propios.
+Para adaptarlo, prepara fuentes geográficas verificadas para el país y agrega su catálogo de municipios y límites de zonas; revisa la estructura actual en `src/mexico-municipalities.json`, [COLONIAS.md](public/data/COLONIAS.md) y [STATE_BOUNDARIES.md](public/data/STATE_BOUNDARIES.md). Configura tus propias claves y servicios, identifica claramente los datos de demostración y conserva la atribución y licencia de mapas, fotografías y otros recursos. La cobertura del buscador mexicano no equivale a cobertura de muestras reales: cada adaptación requiere datos geográficos propios.
 
 Las mejoras se pueden proponer mediante pull requests al repositorio original.
 
