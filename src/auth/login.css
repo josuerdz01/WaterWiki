@@ -1,0 +1,40 @@
+/* Login shares the application's typography, theme tokens and existing controls. */
+.ww-login{min-height:100svh}
+.ww-login-main{padding-bottom:48px}
+.ww-login .intro h1{font-size:clamp(28px,3.5vw,48px)}
+.ww-login-back{flex-shrink:0}
+.ww-login-card{max-width:480px;margin:12px auto 56px}
+.ww-login-card-heading{justify-content:flex-start;font-size:12px;color:var(--t-fg-muted)}
+.ww-login-content{padding:32px}
+.ww-login-content h2{margin:0 0 10px;font-size:28px;font-weight:500;letter-spacing:-1px}
+.ww-login-content>p{margin:0;font-size:13px;color:var(--t-fg-muted)}
+.ww-login-providers{display:grid;gap:12px;margin-top:28px}
+.ww-login-providers button{font-size:13px;min-height:48px;padding:13px 20px;justify-content:flex-start}
+.ww-login-providers button>svg:first-child{height:20px;width:20px;flex-shrink:0}
+.ww-login-providers button>svg:last-child{margin-left:auto}
+.ww-login-providers button:hover{background:var(--t-press)}
+.ww-login-content>p.ww-login-notice{background:var(--t-hover);border:1px solid var(--t-line);border-radius:12px;padding:12px;margin-top:16px;font-size:12px}
+.ww-login-divider{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--t-fg-muted);margin:24px 0 8px}
+.ww-login-divider span{height:1px;background:var(--t-line);flex:1}
+.ww-login-guest{justify-content:center;font-size:12px;border-radius:99px}
+.ww-login-privacy{font-size:11px;line-height:1.6}
+.ww-login-privacy svg{flex-shrink:0}
+.ww-login-footer-link{display:inline-flex;align-items:center;gap:8px;font-size:10px;color:var(--t-fg-muted)}
+@media(max-width:700px){.ww-login .intro{align-items:flex-start;gap:22px;flex-direction:column;padding:32px 0 28px}.ww-login .intro h1{letter-spacing:-1px;margin-top:0}.ww-login-back{font-size:11px;padding:12px 18px}.ww-login-card{margin:0 auto 32px}.ww-login-content{padding:25px 22px}.ww-login-main footer{gap:15px;flex-wrap:wrap}.ww-login-main footer small{display:block;margin:7px 0 0}}
+.ww-login-card-heading{flex-direction:row;align-items:center}
+
+.ww-login-account{display:grid;gap:8px;margin:24px 0;color:var(--t-fg);font-size:14px;overflow-wrap:anywhere}.ww-login-account span{color:var(--t-fg-muted);font-size:12px}.ww-login-continue{display:flex;width:100%;margin-bottom:12px}.ww-login-loading{font-size:11px!important;margin-top:14px!important}.ww-account-link{font-size:12px;white-space:nowrap}
+
+.ww-email{margin:22px 0 12px}
+.ww-email h3{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;margin:0 0 20px}
+.ww-email label{display:block;font-size:12px;margin:16px 0 8px;color:var(--t-fg)}
+.ww-email input{display:block;width:100%;min-width:0;margin-top:8px;padding:12px 14px;border:1px solid var(--t-field-ring);border-radius:12px;background:var(--t-field);color:var(--t-fg);font:inherit;font-size:13px;min-height:44px}
+.ww-email input::placeholder{color:var(--t-fg-subtle)}
+.ww-email-password{display:flex;align-items:center;border:1px solid var(--t-field-ring);border-radius:12px;background:var(--t-field)}
+.ww-email-password input{border:0;background:transparent;margin:0;flex:1}
+.ww-email-password button{padding:12px;color:var(--t-fg-muted)}
+.ww-email small{display:block;color:var(--t-fg-muted);font-size:10px;line-height:1.6;margin-top:8px}
+.ww-email-submit{width:100%;margin-top:22px;min-height:46px}
+.ww-email-switch{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:5px;font-size:11px;margin:20px 0 0}
+.ww-email-switch button{font-size:11px;text-decoration:underline;text-underline-offset:3px;color:var(--t-fg);padding:5px}
+.ww-email .ww-login-notice{padding:12px;background:var(--t-hover);border-radius:12px;font-size:12px;color:var(--t-fg-muted)}
